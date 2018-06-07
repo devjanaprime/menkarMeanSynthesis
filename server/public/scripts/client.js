@@ -14,18 +14,24 @@ myApp.controller( 'GarageController', function( $http ){
     vm.cars = [];
 
     vm.addCar = function(){
-        let newCar = new Car( vm.makeIn, vm.modelIn, vm.odometerIn, vm.yearIn );
-        console.log( 'adding:', newCar );
-        $http({
-            method: 'POST',
-            url: '/garage',
-            data: newCar
-        }).then( function( response ){
-            console.log( 'back from POST with:', response );
-            vm.getCars();
-        }).catch( function( error ){
-            console.log( 'error posting:', error );
-        }) // end $http
+        if( vm.makeIn ==='' ||  vm.modelIn ==='' || vm.odometerIn ==='' ||  vm.yearIn  === '' ){
+            alert( 'NO EMPTIES!!!' );
+        } // end has empties
+        else{
+            let newCar = new Car( vm.makeIn, vm.modelIn, vm.odometerIn, vm.yearIn );
+            console.log( 'adding:', newCar );
+            $http({
+                method: 'POST',
+                url: '/garage',
+                data: newCar
+            }).then( function( response ){
+                console.log( 'back from POST with:', response );
+                vm.getCars();
+            }).catch( function( error ){
+                console.log( 'error posting:', error );
+            }) // end $http
+        } // end no empties
+            
     } // end addCar
 
     vm.getCars = function(){
